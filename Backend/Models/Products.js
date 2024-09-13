@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { MONGO_URI } from './config';
 
 const mongooseSchema = new mongoose.Schema({
     ProductName: { type: String, required: true },
