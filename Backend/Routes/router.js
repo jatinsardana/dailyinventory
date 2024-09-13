@@ -16,7 +16,7 @@ router.post("/insertproduct", async (req, res) => {
     await addProduct.save();
     res.status(201).json(addProduct);
   } catch (err) {
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "error in the internal server" });
   }
 });
 
