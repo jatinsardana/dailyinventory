@@ -1,6 +1,7 @@
 import express from 'express';
 const app = express();
 app.use(express.json());
+// \end{code}
 
 import mongoose from 'mongoose';
 
@@ -25,3 +26,4 @@ mongoose
 app.listen(process.env.PORT || 4000 || 3001, () => {
   console.log(`Example app listening on port ${process.env.PORT}`);
 });
+// index.js
