@@ -9,7 +9,7 @@ export default function InsertProduct() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Handler functions for form inputs
+  // Handler functions for form inputs in the product
   const handleNameChange = (e) => setProductName(e.target.value);
   const handlePriceChange = (e) => setProductPrice(e.target.value);
   const handleCodeChange = (e) => setProductCode(e.target.value.slice(0, 12)); // Limiting to 12 characters
