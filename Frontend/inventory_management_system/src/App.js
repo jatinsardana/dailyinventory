@@ -1,24 +1,17 @@
-import './App.css';
-import Home from './components/Home';
-import Navbar from './components/Navbar';
-import Products from './components/Products';
-import InsertProduct from './components/InsertProduct'
-import UpdateProduct from './components/UpdateProduct';
-import About from './components/About';
+import "./App.css";
+import Home from "./components/Home";
+import Navbar from "./components/Navbar";
+import Products from "./components/Products";
+import InsertProduct from "./components/InsertProduct";
+import UpdateProduct from "./components/UpdateProduct";
+import About from "./components/About";
 
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route
-} from 'react-router-dom';
-
-
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <Navbar title="IMS" about="About"></Navbar>
+      <Navbar title="Data Model" about="About"></Navbar>
 
       <Router>
         <Routes>
@@ -27,12 +20,8 @@ function App() {
           <Route path="/insertproduct" element={<InsertProduct />} />
           <Route path="/updateproduct/:id" element={<UpdateProduct />} />
           <Route path="/about" element={<About />} />
-
         </Routes>
-
       </Router>
-
-
     </div>
   );
 }

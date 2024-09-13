@@ -1,83 +1,74 @@
-const express = require('express');
+import express from "express";
+import products from "../Models/Products.js";
+
 const router = express.Router();
-const products = require('../Models/Products');
 
-//Inserting(Creating) Data:
 router.post("/insertproduct", async (req, res) => {
-    const { ProductName, ProductPrice, ProductBarcode } = req.body;
+  const { ProductName, ProductPrice, ProductCode } = req.body;
 
-    try {
-        const pre = await products.findOne({ ProductBarcode: ProductBarcode })
-        console.log(pre);
-
-        if (pre) {
-            res.status(422).json("Product is already added.")
-        }
-        else {
-            const addProduct = new products({ ProductName, ProductPrice, ProductBarcode })
-
-            await addProduct.save();
-            res.status(201).json(addProduct)
-            console.log(addProduct)
-        }
+  try {
+    const pre = await products.findOne({ ProductCode });
+    if (pre) {
+      return res.status(422).json("Product is already added.");
     }
-    catch (err) {
-        console.log(err)
+
+    const addProduct = new products({ ProductName, ProductPrice, ProductCode });
+    await addProduct.save();
+    res.status(201).json(addProduct);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.get("/products", async (req, res) => {
+  try {
+    const getProducts = await products.find({});
+    res.status(200).json(getProducts);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.get("/products/:id", async (req, res) => {
+  try {
+    const getProduct = await products.findById(req.params.id);
+    if (!getProduct) {
+      return res.status(404).json({ error: "Product not found" });
     }
-})
+    res.status(200).json(getProduct);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
-//Getting(Reading) Data:
-router.get('/products', async (req, res) => {
+router.put("/updateproduct/:id", async (req, res) => {
+  const { ProductName, ProductPrice, ProductCode } = req.body;
 
-    try {
-        const getProducts = await products.find({})
-        console.log(getProducts);
-        res.status(201).json(getProducts);
+  try {
+    const updateProducts = await products.findByIdAndUpdate(
+      req.params.id,
+      { ProductName, ProductPrice, ProductCode },
+      { new: true }
+    );
+    if (!updateProducts) {
+      return res.status(404).json({ error: "Product not found" });
     }
-    catch (err) {
-        console.log(err);
+    res.status(200).json(updateProducts);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.delete("/deleteproduct/:id", async (req, res) => {
+  try {
+    const deleteProduct = await products.findByIdAndDelete(req.params.id);
+    if (!deleteProduct) {
+      return res.status(404).json({ error: "Product not found" });
     }
-})
+    res.status(200).json(deleteProduct);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
-//Getting(Reading) individual Data:
-router.get('/products/:id', async (req, res) => {
-
-    try {
-        const getProduct = await products.findById(req.params.id);
-        console.log(getProduct);
-        res.status(201).json(getProduct);
-    }
-    catch (err) {
-        console.log(err);
-    }
-})
-
-//Editing(Updating) Data:
-router.put('/updateproduct/:id', async (req, res) => {
-    const { ProductName, ProductPrice, ProductBarcode } = req.body;
-
-    try {
-        const updateProducts = await products.findByIdAndUpdate(req.params.id, { ProductName, ProductPrice, ProductBarcode }, { new: true });
-        console.log("Data Updated");
-        res.status(201).json(updateProducts);
-    }
-    catch (err) {
-        console.log(err);
-    }
-})
-
-//Deleting Data:
-router.delete('/deleteproduct/:id', async (req, res) => {
-
-    try {
-        const deleteProduct = await products.findByIdAndDelete(req.params.id);
-        console.log("Data Deleted");
-        res.status(201).json(deleteProduct);
-    }
-    catch (err) {
-        console.log(err);
-    }
-})
-
-
-module.exports = router;
+export default router;

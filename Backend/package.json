@@ -1,9 +1,10 @@
 {
-  "name": "inventory_management_system_backend",
+  "name": "data_model_backend",
   "version": "1.0.0",
-  "proxy": "http://localhost:3001",
-  "description": "Inventory Management System Backend",
+  "proxy": "http://localhost:3000",
+  "description": "Data Model Backend",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon index.js"
@@ -12,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.18.2",
     "mongoose": "^7.2.1"
   },
