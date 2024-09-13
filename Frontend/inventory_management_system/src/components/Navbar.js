@@ -3,7 +3,6 @@ import React from 'react'
 export default function Navbar({ title }) {
   return (
     <nav className="bg-gradient-to-r from-indigo-500 to-purple-600 px-4 py-2 shadow-md flex justify-between items-center">
-      {/* Title and Search */}
       <div className="flex items-center space-x-4">
         <a href="/" className="text-white text-xl font-semibold hover:text-yellow-300 transition duration-300">{title}</a>
         <form className="flex">
